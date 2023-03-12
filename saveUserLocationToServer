@@ -1,0 +1,30 @@
+private fun saveUserLocationToServer(userLocation: LatLng) {
+    // Mengirim lokasi pengguna ke server menggunakan Retrofit
+    val retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    val service = retrofit.create(APIService::class.java)
+    val call = service.saveUserLocation(userLocation.latitude, userLocation.longitude)
+    call.enqueue(object : Callback<ResponseBody> {
+        override fun onResponse(
+            call: Call<ResponseBody>,
+            response: Response<ResponseBody>
+        ) {
+            if (response.isSuccessful) {
+                // Lokasi pengguna berhasil disimpan pada server
+            } else {
+                // Gagal menyimpan lokasi pengguna pada server
+            }
+        }
+
+        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            // Gagal menyimpan lokasi pengguna pada server
+        }
+    })
+}
+
+private fun connectUserWithDriver(userLocation: LatLng) {
+    // Menghubungkan pengguna dengan mitra pengemudi yang cocok
+    // menggunakan data lokasi pengguna dan mitra pengemudi pada server
